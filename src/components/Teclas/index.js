@@ -7,20 +7,12 @@ import { Container, Content, Row } from '../../styles';
 const Teclas = () => {
   const [currentNumber, setCurrentNumber] = useState('0');
   const [firstNumber, setFirstNumber] = useState('0');
-
-  const handleSomNumber = () => {
-    if(firstNumber === '0'){
-      setFirstNumber(currentNumber);
-      setCurrentNumber('0');
-    }else{
-      const sum = Number(firstNumber) + Number(currentNumber);
-      setCurrentNumber(String(sum));
-    }
-  }
+  const [operation, setOperation] = useState('');
 
   const  handleOnClear = () => {
     setCurrentNumber((prev) => {
       setFirstNumber('0');
+      setOperation('');
       return prev.length > 1 ? prev.slice(0, -1) :  '0'
     });
   }
@@ -28,6 +20,29 @@ const Teclas = () => {
   const handleAddNumber = (number) => {
     setCurrentNumber(prev => (prev === '0' ? `${number}` : `${prev}${number}`))
   }
+
+  const handleSomNumber = () => {
+    if(firstNumber === '0'){
+      setFirstNumber(currentNumber);
+      setCurrentNumber('0');
+      setOperation('+');
+    }else{
+      const sum = Number(firstNumber) + Number(currentNumber);
+      setCurrentNumber(String(sum));
+      setOperation('')
+    }
+  }
+
+  const handleEquals = () => {
+    if(firstNumber !== '0' && operation !== '' && currentNumber !== 0){
+      switch(operation){
+        case '+':
+          handleSomNumber();
+          break;
+      }
+    }
+  }
+
   return (
     <Container>
        <Content>
@@ -66,7 +81,7 @@ const Teclas = () => {
         <Button label="&plusmn;" onClick = {() =>handleAddNumber('&plusmn;')}/>
         <Button label="0" onClick = {() =>handleAddNumber('0')}/>
         <Button label="," onClick = {() =>handleAddNumber(',')}/>
-        <Button label="=" onClick = {() =>handleAddNumber('=')} />
+        <Button label="=" onClick = {handleEquals} />
         </Row>
        </Content>
     </Container>
