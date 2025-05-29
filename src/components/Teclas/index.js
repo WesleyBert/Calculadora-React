@@ -32,12 +32,56 @@ const Teclas = () => {
       setOperation('')
     }
   }
+  const handleMultNumber = () => {
+    if(firstNumber === '0'){
+      setFirstNumber(currentNumber);
+      setCurrentNumber('0');
+      setOperation('*');
+    }else{
+      const mult = Number(firstNumber) * Number(currentNumber);
+      setCurrentNumber(String(mult));
+      setOperation('')
+    }
+  }
+  const handleDivNumber = () => {
+    if(firstNumber === '0'){
+      setFirstNumber(currentNumber);
+      setCurrentNumber('0');
+      setOperation('/');
+    }else{
+      const div = Number(firstNumber) / Number(currentNumber);
+      setCurrentNumber(String(div));
+      setOperation('')
+    }
+  }
+  const handleSubNumber = () => {
+    if(firstNumber === '0'){
+      setFirstNumber(currentNumber);
+      setCurrentNumber('0');
+      setOperation('-');
+    }else{
+      const sub = Number(firstNumber) - Number(currentNumber);
+      setCurrentNumber(String(sub));
+      setOperation('')
+    }
+  }
 
   const handleEquals = () => {
     if(firstNumber !== '0' && operation !== '' && currentNumber !== 0){
       switch(operation){
         case '+':
           handleSomNumber();
+          break;
+        case '-':
+          handleSubNumber();
+          break;
+        case '*':
+          handleMultNumber();
+          break;
+        case '/':
+          handleDivNumber();
+          break;
+        default:
           break;
       }
     }
@@ -57,19 +101,19 @@ const Teclas = () => {
         <Button label="1/x" onClick = {() =>handleAddNumber('1/x')}/>
         <Button label="x²" onClick = {() =>handleAddNumber('x²')}/>
         <Button label="√" onClick = {() =>handleAddNumber('√')}/>
-        <Button label="&divide;" onClick = {() =>handleAddNumber('&divide;')}/>
+        <Button label="&divide;" onClick = {handleDivNumber}/>
         </Row>
         <Row>
         <Button label="7" onClick = {() =>handleAddNumber('7')}/>
         <Button label="8" onClick = {() =>handleAddNumber('8')}/>
         <Button label="9" onClick = {() =>handleAddNumber('9')}/>
-        <Button label="X" onClick = {() =>handleAddNumber('X')}/>
+        <Button label="X" onClick = {handleMultNumber}/>
         </Row>
         <Row>
         <Button label="4" onClick = {() =>handleAddNumber('4')}/>
         <Button label="5" onClick = {() =>handleAddNumber('5')}/>
         <Button label="6" onClick = {() =>handleAddNumber('6')}/>
-        <Button label="-" onClick = {() =>handleAddNumber('-')}/>
+        <Button label="-" onClick = {handleSubNumber}/>
         </Row>
         <Row>
         <Button label="1" onClick = {() =>handleAddNumber('1')}/>
